@@ -1,0 +1,5 @@
+MicrogreensCourse/
+.env
+.git
+docker-compose.yml
+ansible/
