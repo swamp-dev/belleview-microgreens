@@ -22,7 +22,8 @@ services:
 
   nginx:
     container_name: nginx
-    depends_on: wordpress
+    depends_on:
+      - wordpress
     image: nginx:alpine
     restart: unless-stopped
     ports:
@@ -36,7 +37,7 @@ services:
 
   certbot:
     depends_on:
-      - webserver
+      - nginx
     image: certbot/certbot
     container_name: certbot
     volumes:
