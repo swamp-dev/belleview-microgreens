@@ -12,3 +12,5 @@
     url: https://raw.githubusercontent.com/certbot/certbot/master/certbot-nginx/certbot_nginx/_internal/tls_configs/options-ssl-nginx.conf
     dest: ../../nginx
     mode: 644
+  tags:
+    - setup
