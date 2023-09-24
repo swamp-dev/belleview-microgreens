@@ -47,6 +47,7 @@
     name:
       - docker.io
       - docker-registry
+      - docker-compose
     state: latest
     update_cache: true
   tags:
