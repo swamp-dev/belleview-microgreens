@@ -54,6 +54,7 @@ volumes:
   certbot-etc:
   wordpress:
 
+
 networks:
   bmc-network:
     driver: bridge
