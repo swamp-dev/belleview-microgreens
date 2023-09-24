@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  wordpress:
+  bmc-wordpress:
     container_name: bmc-wordpress
     image: wordpress:fpm-alpine
     restart: unless-stopped
@@ -20,10 +20,10 @@ services:
           $$_SERVER['HTTPS']='on';
         }
 
-  nginx:
-    container_name: nginx
+  bmc-nginx:
+    container_name: bmc-nginx
     depends_on:
-      - wordpress
+      - bmc-wordpress
     image: nginx:alpine
     restart: unless-stopped
     ports:
@@ -35,11 +35,11 @@ services:
     networks:
       - bmc-network
 
-  certbot:
+  bmc-certbot:
+    container_name: bmc-certbot
     depends_on:
-      - nginx
+      - bmc-nginx
     image: certbot/certbot
-    container_name: certbot
     volumes:
       - certbot-etc:/etc/letsencrypt
       - wordpress:/var/www/html
