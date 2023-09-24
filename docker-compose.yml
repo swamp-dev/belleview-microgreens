@@ -1,0 +1,15 @@
+services:
+  wordpress:
+    image: wordpress:latest
+    ports:
+      - 80:80
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+      # WORDPRESS_CONFIG_EXTRA: |
+      #     define('FORCE_SSL_ADMIN', true);
+      #     if (strpos($${_SERVER}['HTTP_X_FORWARDED_PROTO'], 'https') !== false)
+      #     $${_SERVER}['HTTPS']='on';

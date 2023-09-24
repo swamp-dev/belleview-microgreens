@@ -1,0 +1,71 @@
+- name: Remove old versions of docker - Debian
+  become: true
+  ansible.builtin.apt:
+    name:
+      - docker
+      - docker-engine
+      - docker.io
+      - containerd
+      - runc
+    state: absent
+  tags:
+    - docker
+
+- name: Install prerequisites
+  become: true
+  ansible.builtin.apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - lsb-release
+      - gnupg
+    state: present
+    update_cache: true
+  tags:
+    - docker
+
+- name: Docker - Add signing key
+  become: true
+  ansible.builtin.apt_key:
+    url: 'https://download.docker.com/linux/ubuntu/gpg'
+    state: present
+  tags:
+    - docker
+
+- name: Docker - Add repository into sources list
+  become: true
+  ansible.builtin.apt_repository:
+    repo: 'deb [arch=amd64] https://download.docker.com/linux/ubuntu jammy stable'
+    state: present
+    filename: docker
+  tags:
+    - docker
+
+- name: Install Docker - Debian
+  become: true
+  ansible.builtin.apt:
+    name:
+      - docker.io
+      - docker-registry
+    state: latest
+    update_cache: true
+  tags:
+    - docker
+
+- name: Add user to docker group
+  become: true
+  ansible.builtin.user:
+    name: '{{ user }}'
+    append: yes
+    groups: docker
+  tags:
+    - docker
+
+- name: Start and enable docker daemon
+  ansible.builtin.systemd:
+    state: started
+    name: docker
+    enabled: true
+    masked: false
+  tags:
+    - docker
