@@ -1,8 +1,8 @@
 - name: Decrypt stuff
   copy:
     src: '../../.stuff'
-    dest: '../../.stuff'
+    dest: '../../.s'
     mode: 0644
     owner: '{{ user }}'
   tags:
-    - ssh
+    - setup
