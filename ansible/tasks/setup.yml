@@ -8,9 +8,10 @@
     - setup
 
 - name: Get Recommended Nginx Security Parameter
+  become: true
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/certbot/certbot/master/certbot-nginx/certbot_nginx/_internal/tls_configs/options-ssl-nginx.conf
-    dest: ../../nginx
+    dest: ../nginx/options-ssl-nginx.conf
     mode: 644
   tags:
     - setup
