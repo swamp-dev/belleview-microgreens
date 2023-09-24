@@ -6,3 +6,9 @@
     owner: '{{ user }}'
   tags:
     - setup
+
+- name: Get Recommended Nginx Security Parameter
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/certbot/certbot/master/certbot-nginx/certbot_nginx/_internal/tls_configs/options-ssl-nginx.conf
+    dest: ../../nginx
+    mode: 644
