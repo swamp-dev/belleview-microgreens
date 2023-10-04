@@ -3,3 +3,5 @@ MicrogreensCourse/
 .git
 docker-compose.yml
 ansible/
+images/
+data/

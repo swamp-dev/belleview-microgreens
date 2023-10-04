@@ -21,3 +21,4 @@
   tasks:
     - include: tasks/docker.yml
     - include: tasks/setup.yml
+    - include: tasks/suitecrm.yml

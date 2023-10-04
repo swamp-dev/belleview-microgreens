@@ -1,0 +1,12 @@
+- name: Get Docker Compose File
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/bitnami/containers/main/bitnami/suitecrm/docker-compose.yml 
+    dest: ./suitecrm-docker-compose.yml
+    mode: 700
+  tags:
+    - suitecrm
+
+- name: Start SuiteCRM
+  ansible.builtin.shell: docker-compose -f./suitecrm-docker-compose.yml up -d
+  tags:
+    - suitecrm
