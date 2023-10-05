@@ -22,8 +22,8 @@ services:
     container_name: suitecrm
     image: docker.io/bitnami/suitecrm:8
     ports:
-      - '80:8080'
-      - '443:8443'
+      - '8010:8080'
+      # - '443:8443'
     environment:
       - SUITECRM_DATABASE_HOST=suitecrm-mariadb
       - SUITECRM_DATABASE_PORT_NUMBER=3306
@@ -40,9 +40,39 @@ services:
       - suitecrm-mariadb
     restart: unless-stopped
 
+  suitecrm-nginx:
+    container_name: suitecrm-nginx
+    depends_on:
+      - suitecrm
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - suitecrm_data:/var/www/html
+      - ./nginx-suitecrm:/etc/nginx/conf.d
+      - certbot-etc:/etc/letsencrypt
+    networks:
+      - suitecrm-network
+
+  suitecrm-certbot:
+    container_name: suitecrm-certbot
+    depends_on:
+      - suitecrm-nginx
+    image: certbot/certbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - suitecrm_data:/var/www/html
+    command: certonly --webroot --webroot-path=/var/www/html --email adelgado0723@gmail.com --agree-tos --no-eff-email --staging -d crm.belleviewmicrogreens.com
+      # to check that this worked, run the following command
+      # docker-compose exec suitecrm-nginx ls -la /etc/letsencrypt/live
+      # look for a file with the domain name `belleviewmicrogreens.com`
+      # then, change --staging for --force-renewal
 volumes:
   suitecrm_mariadb_data:
   suitecrm_data:
+  certbot-etc:
 
 networks:
   suitecrm-network:
