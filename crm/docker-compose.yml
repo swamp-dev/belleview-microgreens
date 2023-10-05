@@ -44,6 +44,9 @@ services:
     depends_on:
       - suitecrm-mariadb
     restart: unless-stopped
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
 
 volumes:
   suitecrm_mariadb_data:
