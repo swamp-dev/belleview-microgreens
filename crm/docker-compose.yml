@@ -66,6 +66,8 @@ services:
       # docker-compose exec suitecrm-nginx ls -la /etc/letsencrypt/live
       # look for a file with the domain name `belleviewmicrogreens.com`
       # then, change --staging for --force-renewal
+    networks:
+      - suitecrm-network
 
 volumes:
   suitecrm_mariadb_data:
