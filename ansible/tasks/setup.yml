@@ -1,6 +1,6 @@
 - name: Decrypt stuff
   copy:
-    src: '../../.stuff'
+    src: '../.stuff'
     dest: '../.s'
     mode: 0644
     owner: '{{ user }}'

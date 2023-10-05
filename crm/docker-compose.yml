@@ -47,7 +47,7 @@ services:
       - '80:80'
       - '443:443'
     volumes:
-      - suitecrm:/var/www/html
+      - suitecrm_data:/var/www/html
       - ./nginx-suitecrm:/etc/nginx/conf.d
       - certbot-etc:/etc/letsencrypt
     networks:
@@ -60,7 +60,7 @@ services:
     image: certbot/certbot
     volumes:
       - certbot-etc:/etc/letsencrypt
-      - suitecrm:/var/www/html
+      - suitecrm_data:/var/www/html
     command: certonly --webroot --webroot-path=/var/www/html --email adelgado0723@gmail.com --agree-tos --no-eff-email --staging -d crm.belleviewmicrogreens.com
       # to check that this worked, run the following command
       # docker-compose exec suitecrm-nginx ls -la /etc/letsencrypt/live
