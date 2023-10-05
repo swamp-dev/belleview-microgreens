@@ -25,7 +25,7 @@ services:
       - '80:8080'
       - '443:8443'
     environment:
-      - SUITECRM_DATABASE_HOST=mariadb
+      - SUITECRM_DATABASE_HOST=suitecrm-mariadb
       - SUITECRM_DATABASE_PORT_NUMBER=3306
       - SUITECRM_DATABASE_USER=${MARIADB_USER}
       - SUITECRM_DATABASE_NAME=${MARIADB_DATABASE}
@@ -43,7 +43,6 @@ services:
 volumes:
   suitecrm_mariadb_data:
   suitecrm_data:
-  certbot-etc:
 
 networks:
   suitecrm-network:
