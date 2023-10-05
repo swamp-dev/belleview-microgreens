@@ -1,5 +1,6 @@
 MicrogreensCourse/
-.env
+*.env
+.s
 images/
 data/
 
