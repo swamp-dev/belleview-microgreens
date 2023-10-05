@@ -16,6 +16,7 @@ services:
       - 'suitecrm_mariadb_data:/bitnami/mariadb'
     networks:
       - suitecrm-network
+    restart: unless-stopped
 
   suitecrm:
     container_name: suitecrm
@@ -37,6 +38,7 @@ services:
       - suitecrm-network
     depends_on:
       - suitecrm-mariadb
+    restart: unless-stopped
 
 volumes:
   suitecrm_mariadb_data:
