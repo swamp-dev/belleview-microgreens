@@ -37,6 +37,11 @@ services:
       - SUITECRM_PASSWORD=${SUITECRM_PASSWORD}
       # ALLOW_EMPTY_PASSWORD is recommended only for development.
       - ALLOW_EMPTY_PASSWORD=yes
+      - SUITECRM_SMTP_HOST=${SUITECRM_SMTP_HOST}
+      - SUITECRM_SMTP_PROTOCOL=${SUITECRM_SMTP_PROTOCOL}
+      - SUITECRM_SMTP_PORT=${SUITECRM_SMTP_PORT}
+      - SUITECRM_SMTP_USER=${SUITECRM_SMTP_USER}
+      - SUITECRM_SMTP_PASSWORD=${SUITECRM_SMTP_PASSWORD}
     volumes:
       - 'suitecrm_data:/bitnami/suitecrm'
     networks:
