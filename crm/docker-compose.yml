@@ -1,0 +1,76 @@
+# Copyright VMware, Inc.
+# SPDX-License-Identifier: APACHE-2.0
+version: '3'
+
+services:
+  suitecrm-mariadb:
+    container_name: suitecrm-mariadb
+    image: docker.io/bitnami/mariadb:11.0
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_USER=${MARIADB_USER}
+      - MARIADB_DATABASE=${MARIADB_DATABASE}
+      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
+    volumes:
+      - 'suitecrm_mariadb_data:/bitnami/mariadb'
+    networks:
+      - suitecrm-network
+  suitecrm:
+    container_name: suitecrm
+    image: docker.io/bitnami/suitecrm:8
+    ports:
+      - '80:8080'
+      - '443:8443'
+    environment:
+      - SUITECRM_DATABASE_HOST=mariadb
+      - SUITECRM_DATABASE_PORT_NUMBER=3306
+      - SUITECRM_DATABASE_USER=${MARIADB_USER}
+      - SUITECRM_DATABASE_NAME=${MARIADB_DATABASE}
+      - SUITECRM_DATABASE_PASSWORD=${MARIADB_PASSWORD}
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - 'suitecrm_data:/bitnami/suitecrm'
+    networks:
+      - suitecrm-network
+    depends_on:
+      - mariadb
+
+  suitecrm-nginx:
+    container_name: suitecrm-nginx
+    depends_on:
+      - bmc-wordpress
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - '8010:80'
+    volumes:
+      - suitecrm:/var/www/html
+      - ./nginx-suitecrm:/etc/nginx/conf.d
+      - certbot-etc:/etc/letsencrypt
+    networks:
+      - suitecrm-network
+
+  suitecrm-certbot:
+    container_name: suitecrm-certbot
+    depends_on:
+      - suitecrm-nginx
+    image: certbot/certbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - suitecrm:/var/www/html
+    command: certonly --webroot --webroot-path=/var/www/html --email adelgado0723@gmail.com --agree-tos --no-eff-email --staging -d crm.belleviewmicrogreens.com
+      # to check that this worked, run the following command
+      # docker-compose exec suitecrm-nginx ls -la /etc/letsencrypt/live
+      # look for a file with the domain name `belleviewmicrogreens.com`
+      # then, change --staging for --force-renewal
+
+volumes:
+  suitecrm_mariadb_data:
+  suitecrm_data:
+  certbot-etc:
+
+networks:
+  suitecrm-network:
+    driver: bridge
