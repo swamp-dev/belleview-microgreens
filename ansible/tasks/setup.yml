@@ -11,7 +11,7 @@
   become: true
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/certbot/certbot/master/certbot-nginx/certbot_nginx/_internal/tls_configs/options-ssl-nginx.conf
-    dest: ../nginx/options-ssl-nginx.conf
+    dest: ../nginx-suitecrm/options-ssl-nginx.conf
     mode: 644
   tags:
     - setup
