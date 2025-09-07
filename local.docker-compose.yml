@@ -58,7 +58,7 @@ services:
     volumes:
       - certbot-etc:/etc/letsencrypt
       - wordpress:/var/www/html
-    command: certonly --webroot --webroot-path=/var/www/html --email adelgado0723@gmail.com --agree-tos --no-eff-email --staging -d belleviewmicrogreens.com -d www.belleviewmicrogreens.com
+    command: certonly --webroot --webroot-path=/var/www/html --email andy@andydelgado.dev --agree-tos --no-eff-email --staging -d belleviewmicrogreens.com -d www.belleviewmicrogreens.com
 
 volumes:
   certbot-etc:
